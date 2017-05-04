@@ -26,10 +26,12 @@ So I refactor one, base on Base Packages.
 
 ### CheckList
 * base drag and resize (finish)
-* resize bounds
+* children can not influence each other
+* can not drag when resize
+* resize can not overflow boundary
 * z-index control
 
 ### Changelog
-##### 0.0.1 
+##### 0.0.1
 
 base drag and resize
