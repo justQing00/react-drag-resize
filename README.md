@@ -21,8 +21,8 @@ react component drag and resize
 
 ### Inspiration From
 
-In a project I have to make React dragable and resizable, and I found [react-rnd](https://github.com/bokuweb/react-rnd). But it's have some bugs about muti compoments drag and show even when it's latest version(v5.0.3).
-So I refactor, base on Base Packages.
+In a project I have to make React compoments dragable and resizable, and I found [react-rnd](https://github.com/bokuweb/react-rnd). But it's have some bugs about muti compoments drag and show even when it's latest version(v5.0.3).
+So I refactor one, base on Base Packages.
 
 ### Changelog
 ##### 0.0.1 
