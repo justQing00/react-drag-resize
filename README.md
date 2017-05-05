@@ -21,19 +21,23 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
 ```
 ### DragResizeContainer Props
 ```javascript
-layout  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0 } ]
+{
+  layout,  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0 } ]
 
-onLayoutChange // callback layout
+  onLayoutChange, // callback layout
 
-dragProps // same to react-draggable props
+  dragProps,  // same to react-draggable props
 
-resizeProps // same to react-resizable-box props
+  resizeProps,  // same to react-resizable-box props
+}
 ```
 ### DragResize Props
 ```javascript
-dragProps // same to react-draggable props
+{
+  dragProps,  // same to react-draggable props
 
-resizeProps // same to react-resizable-box props
+  resizeProps,  // same to react-resizable-box props
+}
 ```
 ### Base Packages
 [react-resizable-box](https://github.com/bokuweb/react-resizable-box)
