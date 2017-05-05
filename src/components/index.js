@@ -4,12 +4,10 @@ import Resizable from 'react-resizable-box';
 
 export default class DragResize extends React.Component {
 
-  getDragProps = () => {
-    return {
-      bounds: 'parent',
-      defaultPosition: { x: 0, y: 0 },
-      ...this.props.dragProps,
-    };
+  onResizeStart = (e, direction, refToElement) => {
+    const { onResizeStart } = this.props.resizeProps || {};
+    e.stopPropagation();
+    if (onResizeStart) onResizeStart(e, direction, refToElement);
   }
 
   getResizeProps = () => {
@@ -19,6 +17,15 @@ export default class DragResize extends React.Component {
       minWidth: 100,
       minHeight: 80,
       ...this.props.resizeProps,
+      onResizeStart: this.onResizeStart,
+    };
+  }
+
+  getDragProps = () => {
+    return {
+      bounds: 'parent',
+      defaultPosition: { x: 0, y: 0 },
+      ...this.props.dragProps,
     };
   }
 
