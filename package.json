@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "react-draggable": "^2.2.6",
-    "react-resizable-box": "^2.0.3"
+    "react-resizable-box": "^2.0.3",
+    "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
     "react": "^15.5.4",

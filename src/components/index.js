@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import Draggable from 'react-draggable';
 import Resizable from 'react-resizable-box';
+import isEqual from 'lodash.isequal';
 
 export class DragResize extends React.Component {
   state = {
@@ -59,10 +60,18 @@ export default class DragResizeContainer extends React.Component {
     parentNode: null,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { sizeMap, positionMap } = this.props;
     this.sizeMap = sizeMap || {};
     this.positionMap = positionMap || {};
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { sizeMap, positionMap } = nextProps;
+    if (!isEqual(sizeMap, this.props.sizeMap) || !isEqual(positionMap, this.props.positionMap)) {
+      this.sizeMap = sizeMap || {};
+      this.positionMap = positionMap || {};
+    }
   }
 
   onResizeStop = (key) => {
@@ -110,8 +119,8 @@ export default class DragResizeContainer extends React.Component {
             <DragResize
               key={key}
               {...defaultProps}
-              resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key), ...this.sizeMap[key] })}
-              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key), position: this.positionMap[key] })}
+              resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key) })}
+              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key) })}
             >
               {single}
             </DragResize>
