@@ -45,10 +45,12 @@ In a project I have to make React compoments dragable and resizable, and I found
 So I refactor one, base on Base Packages.
 
 ### CheckList
-* container width change
 * every single child z-index control
 
 ### Changelog
+##### 0.0.5
+* every single child z-index control
+
 ##### 0.0.4
 * a way can export and restore all children size and postion
 

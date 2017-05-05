@@ -51,10 +51,10 @@ export class DragResize extends React.Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, childMap } = this.props;
     return (
       <Draggable {...this.getDragProps()}>
-        <div style={boxStyle}>
+        <div style={Object.assign({}, boxStyle, { zIndex: childMap.zIndex })}>
           <Resizable {...this.getResizeProps()}>
             {children}
           </Resizable>
@@ -169,4 +169,4 @@ const transMapToLayout = (childrenMap = {}) => {
   });
 };
 
-const defaultChildProps = { x: 0, y: 0, width: 200, height: 100 };
+const defaultChildProps = { x: 0, y: 0, width: 200, height: 100, zIndex: 1 };
