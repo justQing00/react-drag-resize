@@ -36,10 +36,20 @@ export default class DragResize extends React.Component {
   }
 }
 
+export const DragResizeContainer = ({ children }) => {
+  return <div style={contianerStyle}>{children}</div>;
+};
+
+const contianerStyle = {
+  position: 'relative',
+  width: '100%',
+  height: '100%',
+};
+
 const boxStyle = {
   width: 'auto',
   height: 'auto',
   cursor: 'move',
   display: 'inline-block',
-  float: 'left', //  浮动，防止size大小变化导致互相影响
+  position: 'absolute',
 };
