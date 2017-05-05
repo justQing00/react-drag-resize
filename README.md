@@ -20,11 +20,9 @@ react component drag and resize
     </div>
 
 ### DragResizeContainer Props
-    sizeMap  // all children sizeMap,  demo: { 1: { width: 100, height: 1000 } }
+    layout  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0 } ]
 
-    positionMap  // all children positionMap,  demo: { 1: { x: 0, y: 0 } }
-
-    onLayoutChange // to export sizeMap and positionMap
+    onLayoutChange // callback layout
 
     dragProps // same to react-draggable props
 
@@ -47,7 +45,7 @@ In a project I have to make React compoments dragable and resizable, and I found
 So I refactor one, base on Base Packages.
 
 ### CheckList
-* a way can export all children size and postion
+* a way can restore all children size and postion
 * container width change
 * every single child z-index control
 

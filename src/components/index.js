@@ -61,16 +61,14 @@ export default class DragResizeContainer extends React.Component {
   }
 
   componentWillMount() {
-    const { sizeMap, positionMap } = this.props;
-    this.sizeMap = sizeMap || {};
-    this.positionMap = positionMap || {};
+    const { layout } = this.props;
+    this.childrenMap = transLayoutToMap(layout);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { sizeMap, positionMap } = nextProps;
-    if (!isEqual(sizeMap, this.props.sizeMap) || !isEqual(positionMap, this.props.positionMap)) {
-      this.sizeMap = sizeMap || {};
-      this.positionMap = positionMap || {};
+    const { layout } = nextProps;
+    if (!isEqual(layout)) {
+      this.childrenMap = transLayoutToMap(layout);
     }
   }
 
@@ -79,7 +77,7 @@ export default class DragResizeContainer extends React.Component {
       const { onResizeStop } = this.props.resizeProps || {};
       if (onResizeStop) onResizeStop(e, direction, refToElement, delta);
       const temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
-      if (key) this.sizeMap[key] = temp;
+      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
     };
   }
@@ -89,14 +87,14 @@ export default class DragResizeContainer extends React.Component {
       const { onStop } = this.props.dragProps || {};
       if (onStop) onStop();
       const temp = { x: position.x, y: position.y };
-      if (key) this.positionMap[key] = temp;
+      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
     };
   }
 
   onLayoutChange = () => {
     const { onLayoutChange } = this.props;
-    if (onLayoutChange) onLayoutChange({ sizeMap: this.sizeMap, positionMap: this.positionMap });
+    if (onLayoutChange) onLayoutChange(transMapToLayout(this.childrenMap));
   }
 
   setParentNode = () => {
@@ -143,4 +141,19 @@ const boxStyle = {
   cursor: 'move',
   display: 'inline-block',
   position: 'absolute',
+};
+
+const transLayoutToMap = (layout = []) => {
+  const childrenMap = {};
+  layout.forEach(({ key, ...other }) => {
+    childrenMap[key] = other;
+  });
+  return childrenMap;
+};
+
+const transMapToLayout = (childrenMap = {}) => {
+  return Object.keys(childrenMap).map((key) => {
+    const { x = 0, y = 0, width = 200, height = 100 } = childrenMap[key];
+    return { key, x, y, width, height };
+  });
 };
