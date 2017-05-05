@@ -7,6 +7,14 @@ import isEqual from 'lodash.isequal';
 export class DragResize extends React.Component {
   state = {
     parentNode: null,
+    position: { x: 0, y: 0 },
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { childMap } = nextProps;
+    if (!isEqual(childMap, this.props.childMap)) {
+      this.setState({ position: { x: childMap.x, y: childMap.y } });
+    }
   }
 
   onResizeStart = (e, direction, refToElement) => {
@@ -38,6 +46,7 @@ export class DragResize extends React.Component {
       ...dragProps,
       bounds: dragProps.bounds || 'parent',
       defaultPosition: dragProps.defaultPosition || { x: 0, y: 0 },
+      position: this.state.position,
     };
   }
 
@@ -67,7 +76,7 @@ export default class DragResizeContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { layout } = nextProps;
-    if (!isEqual(layout)) {
+    if (!isEqual(layout, this.props.layout)) {
       this.childrenMap = transLayoutToMap(layout);
     }
   }
@@ -89,6 +98,7 @@ export default class DragResizeContainer extends React.Component {
       const temp = { x: position.x, y: position.y };
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
+      this.setState({}); // force update when drag, just reduce size change render
     };
   }
 
