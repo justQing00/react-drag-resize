@@ -60,8 +60,9 @@ export default class DragResizeContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.sizeMap = {};
-    this.positionMap = {};
+    const { sizeMap, positionMap } = this.props;
+    this.sizeMap = sizeMap || {};
+    this.positionMap = positionMap || {};
   }
 
   onResizeStop = (key) => {
@@ -99,18 +100,18 @@ export default class DragResizeContainer extends React.Component {
     const { parentNode } = this.state;
     const defaultProps = {
       parentNode,
-      dragProps: Object.assign({}, dragProps, { onStop: this.onDragStop }),
     };
     const tempChildren = children instanceof Array ? children : [children];
     return (
       <div style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
         {tempChildren.map((single) => {
+          const key = single.key;
           return (
             <DragResize
-              key={single.key}
+              key={key}
               {...defaultProps}
-              resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(single.key) })}
-              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(single.key) })}
+              resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key), ...this.sizeMap[key] })}
+              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key), position: this.positionMap[key] })}
             >
               {single}
             </DragResize>
