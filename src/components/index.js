@@ -113,12 +113,14 @@ export default class DragResizeContainer extends React.Component {
       <div style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
         {tempChildren.map((single) => {
           const key = single.key;
+          if (!this.childrenMap[key]) this.childrenMap[key] = defaultChildProps;
           return (
             <DragResize
               key={key}
               {...defaultProps}
               resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key) })}
               dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key) })}
+              childMap={this.childrenMap[key]}
             >
               {single}
             </DragResize>
@@ -153,7 +155,8 @@ const transLayoutToMap = (layout = []) => {
 
 const transMapToLayout = (childrenMap = {}) => {
   return Object.keys(childrenMap).map((key) => {
-    const { x = 0, y = 0, width = 200, height = 100 } = childrenMap[key];
-    return { key, x, y, width, height };
+    return { key, ...defaultChildProps, ...childrenMap[key] };
   });
 };
+
+const defaultChildProps = { x: 0, y: 0, width: 200, height: 100 };
