@@ -2,7 +2,7 @@ import * as React from 'react';
 import Draggable from 'react-draggable';
 import Resizable from 'react-resizable-box';
 
-export default class DragResize extends React.Component {
+export class DragResize extends React.Component {
 
   onResizeStart = (e, direction, refToElement) => {
     const { onResizeStart } = this.props.resizeProps || {};
@@ -45,9 +45,17 @@ export default class DragResize extends React.Component {
   }
 }
 
-export const DragResizeContainer = ({ children }) => {
-  return <div style={contianerStyle}>{children}</div>;
+const DragResizeContainer = ({ children }) => {
+  return (
+    <div style={contianerStyle}>
+      {children.map((single, index) => {
+        return <DragResize key={index}>{single}</DragResize>;
+      })}
+    </div>
+  );
 };
+
+export default DragResizeContainer;
 
 const contianerStyle = {
   position: 'relative',

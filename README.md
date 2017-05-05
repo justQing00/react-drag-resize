@@ -3,10 +3,17 @@ react component drag and resize
 
 ### How to use
 
-    <DragResize key={id}>
-       <YourComp>
-    </DragResize>
+    import DragResizeContainer from 'react-drag-resize';
 
+    <DragResizeContainer key={id}>
+      {list.map((single) => {
+        return <YourComp key={single.key}/>
+      })}
+    </DragResizeContainer>
+
+    <DragResizeContainer key={id}>
+      <OneComp />
+    </DragResizeContainer>
 
 ### DragResize Props
 
@@ -28,7 +35,7 @@ So I refactor one, base on Base Packages.
 * base drag and resize (finish)
 * children drag and resize can not influence each other (finish)
 * can not drag when resize (finish)
-* can just use container not every DragResize component
+* can just use container not every DragResize component (finish)
 * resize can not overflow boundary
 * save to localstorage
 * every single child z-index control
