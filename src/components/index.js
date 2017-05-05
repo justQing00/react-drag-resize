@@ -11,21 +11,23 @@ export default class DragResize extends React.Component {
   }
 
   getResizeProps = () => {
+    const { resizeProps } = this.props;
     return {
-      width: 200,
-      height: 100,
-      minWidth: 100,
-      minHeight: 80,
-      ...this.props.resizeProps,
+      ...resizeProps,
+      width: resizeProps.width || 200,
+      height: resizeProps.height || 100,
+      minWidth: resizeProps.minWidth || 100,
+      minHeight: resizeProps.minHeight || 80,
       onResizeStart: this.onResizeStart,
     };
   }
 
   getDragProps = () => {
+    const { dragProps } = this.props;
     return {
-      bounds: 'parent',
-      defaultPosition: { x: 0, y: 0 },
-      ...this.props.dragProps,
+      ...dragProps,
+      bounds: dragProps.bounds || 'parent',
+      defaultPosition: dragProps.defaultPosition || { x: 0, y: 0 },
     };
   }
 
