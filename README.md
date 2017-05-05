@@ -5,13 +5,13 @@ react component drag and resize
 
     import DragResizeContainer from 'react-drag-resize';
 
-    <DragResizeContainer key={id}>
+    <DragResizeContainer>
       {list.map((single) => {
         return <YourComp key={single.key}/>
       })}
     </DragResizeContainer>
 
-    <DragResizeContainer key={id}>
+    <DragResizeContainer>
       <OneComp />
     </DragResizeContainer>
 
