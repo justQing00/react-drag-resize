@@ -2,38 +2,39 @@
 react component drag and resize
 
 ### How to use
+```javascript
+import DragResizeContainer, { DragResize } from 'react-drag-resize';
 
-    import DragResizeContainer, { DragResize } from 'react-drag-resize';
+<DragResizeContainer>
+  {list.map((single) => {
+    return <YourComp key={single.key}/>
+  })}
+</DragResizeContainer>
 
-    <DragResizeContainer>
-      {list.map((single) => {
-        return <YourComp key={single.key}/>
-      })}
-    </DragResizeContainer>
+<DragResizeContainer>
+  <OneComp />    // use key if need save it
+</DragResizeContainer>
 
-    <DragResizeContainer>
-      <OneComp />    // use key if need to save it
-    </DragResizeContainer>
-
-    <div style={{width: '500px' height: '500px', position: 'relative' }}>
-      <DragResize><OneComp /></DragResize>
-    </div>
-
+<div style={{width: '500px' height: '500px', position: 'relative' }}>
+  <DragResize><OneComp /></DragResize>
+</div>
+```
 ### DragResizeContainer Props
-    layout  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0 } ]
+```javascript
+layout  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0 } ]
 
-    onLayoutChange // callback layout
+onLayoutChange // callback layout
 
-    dragProps // same to react-draggable props
+dragProps // same to react-draggable props
 
-    resizeProps // same to react-resizable-box props
-
+resizeProps // same to react-resizable-box props
+```
 ### DragResize Props
+```javascript
+dragProps // same to react-draggable props
 
-    dragProps // same to react-draggable props
-
-    resizeProps // same to react-resizable-box props
-
+resizeProps // same to react-resizable-box props
+```
 ### Base Packages
 [react-resizable-box](https://github.com/bokuweb/react-resizable-box)
 
@@ -45,7 +46,6 @@ In a project I have to make React compoments dragable and resizable, and I found
 So I refactor one, base on Base Packages.
 
 ### CheckList
-* every single child z-index control
 
 ### Changelog
 ##### 0.0.5
