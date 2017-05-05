@@ -3,7 +3,7 @@ react component drag and resize
 
 ### How to use
 
-    import DragResizeContainer from 'react-drag-resize';
+    import DragResizeContainer, { DragResize } from 'react-drag-resize';
 
     <DragResizeContainer>
       {list.map((single) => {
@@ -15,6 +15,9 @@ react component drag and resize
       <OneComp />
     </DragResizeContainer>
 
+    <div style={{width: '500px' height: '500px', position: 'relative' }}>
+      <DragResize><OneComp /></DragResize>
+    </div>
 ### DragResize Props
 
     dragProps // same to react-draggable props
