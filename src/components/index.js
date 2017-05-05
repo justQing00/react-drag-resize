@@ -59,19 +59,58 @@ export default class DragResizeContainer extends React.Component {
     parentNode: null,
   }
 
+  componentDidMount() {
+    this.sizeMap = {};
+    this.positionMap = {};
+  }
+
+  onResizeStop = (key) => {
+    return (e, direction, refToElement, delta) => {
+      const { onResizeStop } = this.props.resizeProps || {};
+      if (onResizeStop) onResizeStop(e, direction, refToElement, delta);
+      const temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
+      if (key) this.sizeMap[key] = temp;
+      this.onLayoutChange();
+    };
+  }
+
+  onDragStop = () => {
+    const { onStop } = this.props.dragProps || {};
+    if (onStop) onStop();
+  }
+
+  onLayoutChange = () => {
+    const { onLayoutChange } = this.props;
+    if (onLayoutChange) onLayoutChange({ sizeMap: this.sizeMap, positionMap: this.positionMap });
+  }
+
   setParentNode = () => {
     const { parentNode } = this.state;
     if (!parentNode) this.setState({ parentNode: ReactDom.findDOMNode(this) });
   }
 
   render() {
-    const { children, ...other } = this.props;
+    const { children, dragProps, resizeProps } = this.props;
     const { parentNode } = this.state;
+    const defaultProps = {
+      parentNode,
+      dragProps: Object.assign({}, dragProps, { onStop: this.onDragStop }),
+    };
+    const tempChildren = children instanceof Array ? children : [children];
     return (
       <div style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
-        {children instanceof Array ? children.map((single) => {
-          return <DragResize key={single.key} {...other} parentNode={parentNode}>{single}</DragResize>;
-        }) : <DragResize {...other} parentNode={parentNode}>{children}</DragResize>}
+        {tempChildren.map((single) => {
+          return (
+            <DragResize
+              key={single.key}
+              {...defaultProps}
+              resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(single.key) })}
+              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(single.key) })}
+            >
+              {single}
+            </DragResize>
+          );
+        })}
       </div>
     );
   }
