@@ -27,9 +27,11 @@ So I refactor one, base on Base Packages.
 ### CheckList
 * base drag and resize (finish)
 * children drag and resize can not influence each other (finish)
-* can not drag when resize
+* can not drag when resize (finish)
+* can just use container not every DragResize component
 * resize can not overflow boundary
-* z-index control
+* save to localstorage
+* every single child z-index control
 
 ### Changelog
 ##### 0.0.1
