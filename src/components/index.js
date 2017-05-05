@@ -11,7 +11,7 @@ export default class DragResize extends React.Component {
   }
 
   getResizeProps = () => {
-    const { resizeProps } = this.props;
+    const { resizeProps = {} } = this.props;
     return {
       ...resizeProps,
       width: resizeProps.width || 200,
@@ -23,7 +23,7 @@ export default class DragResize extends React.Component {
   }
 
   getDragProps = () => {
-    const { dragProps } = this.props;
+    const { dragProps = {} } = this.props;
     return {
       ...dragProps,
       bounds: dragProps.bounds || 'parent',

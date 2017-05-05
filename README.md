@@ -26,7 +26,7 @@ So I refactor one, base on Base Packages.
 
 ### CheckList
 * base drag and resize (finish)
-* children can not influence each other
+* children drag and resize can not influence each other (finish)
 * can not drag when resize
 * resize can not overflow boundary
 * z-index control
