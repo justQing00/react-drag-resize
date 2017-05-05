@@ -45,12 +45,12 @@ export class DragResize extends React.Component {
   }
 }
 
-const DragResizeContainer = ({ children }) => {
+const DragResizeContainer = ({ children, ...other }) => {
   return (
     <div style={contianerStyle}>
       {children instanceof Array ? children.map((single) => {
-        return <DragResize key={single.key}>{single}</DragResize>;
-      }) : <DragResize>{children}</DragResize>}
+        return <DragResize key={single.key} {...other}>{single}</DragResize>;
+      }) : <DragResize {...other}>{children}</DragResize>}
     </div>
   );
 };
