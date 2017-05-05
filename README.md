@@ -32,20 +32,21 @@ In a project I have to make React compoments dragable and resizable, and I found
 So I refactor one, base on Base Packages.
 
 ### CheckList
-* resize can not overflow boundary
-* support touchEvent
-* support other container
 * save to localstorage
 * container width change
 * every single child z-index control
 
 ### Changelog
-##### 0.0.1
-
-* base drag and resize
+##### 0.0.3
+* resize can not overflow boundary
+* support touchEvent
+* support other container
 
 ##### 0.0.2
-
 * children drag and resize can not influence each other
 * can not drag when resize
 * can just use container not every DragResize component
+
+##### 0.0.1
+* base drag and resize
+
