@@ -74,9 +74,14 @@ export default class DragResizeContainer extends React.Component {
     };
   }
 
-  onDragStop = () => {
-    const { onStop } = this.props.dragProps || {};
-    if (onStop) onStop();
+  onDragStop = (key) => {
+    return (e, position) => {
+      const { onStop } = this.props.dragProps || {};
+      if (onStop) onStop();
+      const temp = { x: position.x, y: position.y };
+      if (key) this.positionMap[key] = temp;
+      this.onLayoutChange();
+    };
   }
 
   onLayoutChange = () => {
