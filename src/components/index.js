@@ -1,8 +1,12 @@
 import * as React from 'react';
+import * as ReactDom from 'react-dom';
 import Draggable from 'react-draggable';
 import Resizable from 'react-resizable-box';
 
 export class DragResize extends React.Component {
+  state = {
+    parentNode: null,
+  }
 
   onResizeStart = (e, direction, refToElement) => {
     const { onResizeStart } = this.props.resizeProps || {};
@@ -11,7 +15,7 @@ export class DragResize extends React.Component {
   }
 
   getResizeProps = () => {
-    const { resizeProps = {} } = this.props;
+    const { resizeProps = {}, parentNode } = this.props;
     return {
       ...resizeProps,
       width: resizeProps.width || 200,
@@ -19,6 +23,7 @@ export class DragResize extends React.Component {
       minWidth: resizeProps.minWidth || 100,
       minHeight: resizeProps.minHeight || 80,
       onResizeStart: this.onResizeStart,
+      bounds: resizeProps.bounds || parentNode || this.state.parentNode,
     };
   }
 
@@ -45,17 +50,28 @@ export class DragResize extends React.Component {
   }
 }
 
-const DragResizeContainer = ({ children, ...other }) => {
-  return (
-    <div style={contianerStyle}>
-      {children instanceof Array ? children.map((single) => {
-        return <DragResize key={single.key} {...other}>{single}</DragResize>;
-      }) : <DragResize {...other}>{children}</DragResize>}
-    </div>
-  );
-};
+export default class DragResizeContainer extends React.Component {
+  state = {
+    parentNode: null,
+  }
 
-export default DragResizeContainer;
+  setParentNode = () => {
+    const { parentNode } = this.state;
+    if (!parentNode) this.setState({ parentNode: ReactDom.findDOMNode(this) });
+  }
+
+  render() {
+    const { children, ...other } = this.props;
+    const { parentNode } = this.state;
+    return (
+      <div style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
+        {children instanceof Array ? children.map((single) => {
+          return <DragResize key={single.key} {...other} parentNode={parentNode}>{single}</DragResize>;
+        }) : <DragResize {...other} parentNode={parentNode}>{children}</DragResize>}
+      </div>
+    );
+  }
+}
 
 const contianerStyle = {
   position: 'relative',
