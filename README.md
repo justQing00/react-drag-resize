@@ -22,7 +22,7 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
 ### DragResizeContainer Props
 ```javascript
 {
-  layout,  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0 } ]
+  layout,  // all children size and position,  demo: [{ key: 1, width: 100, height: 1000, x: 0, y: 0, zIndex: 1 } ]
 
   onLayoutChange, // callback layout
 
