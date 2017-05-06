@@ -21,7 +21,7 @@ export class DragResize extends React.Component {
     const { resizeProps, parentNode } = this.props;
     const { onResizeStart } = resizeProps || {};
     e.stopPropagation();
-    if (!parentNode && this.state.parentNode) {
+    if (!parentNode && !this.state.parentNode) {
       this.setState({ parentNode: ReactDom.findDOMNode(this).parentNode });
     }
     if (onResizeStart) onResizeStart(e, direction, refToElement);
