@@ -34,6 +34,8 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
 ### DragResize Props
 ```javascript
 {
+  childMap, // child size and position,  demo: { key: 1, width: 100, height: 1000, x: 0, y: 0, zIndex: 1 }
+
   dragProps,  // same to react-draggable props
 
   resizeProps,  // same to react-resizable-box props
