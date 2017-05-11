@@ -115,7 +115,7 @@ export default class DragResizeContainer extends React.Component {
   }
 
   render() {
-    const { children, dragProps, resizeProps, layout, ...other } = this.props;
+    const { children, dragProps, resizeProps, layout, onLayoutChange, ...other } = this.props;
     const { parentNode } = this.state;
     const defaultProps = {
       parentNode,

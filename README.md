@@ -56,6 +56,9 @@ So I refactor one, base on Base Packages.
 ### Changelog
 
 ### Changelog
+##### 0.1.0
+* onLayoutChange waring fix
+
 ##### 0.0.9
 * fix resize width bug
 
