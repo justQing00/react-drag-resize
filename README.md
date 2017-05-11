@@ -54,6 +54,9 @@ So I refactor one, base on Base Packages.
 ### CheckList
 
 ### Changelog
+##### 0.0.7
+* fix layout warning
+
 ##### 0.0.6
 * can add other props for container
 
