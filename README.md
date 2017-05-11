@@ -54,6 +54,11 @@ So I refactor one, base on Base Packages.
 ### CheckList
 
 ### Changelog
+
+### Changelog
+##### 0.0.8
+* key not empty, fix position bug
+
 ##### 0.0.7
 * fix layout warning
 

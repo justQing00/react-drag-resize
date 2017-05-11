@@ -5,9 +5,13 @@ import Resizable from 'react-resizable-box';
 import isEqual from 'lodash.isequal';
 
 export class DragResize extends React.Component {
-  state = {
-    parentNode: null,
-    position: { x: 0, y: 0 },
+  constructor(props) {
+    super(props);
+    const { x, y } = this.props.childMap || {};
+    this.state = {
+      parentNode: null,
+      position: { x: x || 0, y: y || 0 },
+    };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -76,7 +80,7 @@ export default class DragResizeContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { layout } = nextProps;
-    if (!isEqual(layout, this.props.layout)) {
+    if (!isEqual(layout, this.props.layout) || (Object.keys(this.childrenMap).length !== layout.length) ) {
       this.childrenMap = transLayoutToMap(layout);
     }
   }
@@ -123,7 +127,7 @@ export default class DragResizeContainer extends React.Component {
       <div {...other} style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
         {tempChildren.map((single) => {
           const key = single.key;
-          if (!this.childrenMap[key]) this.childrenMap[key] = defaultChildProps;
+          if (!this.childrenMap[key] && key) this.childrenMap[key] = defaultChildProps;
           return (
             <DragResize
               key={key}
@@ -158,7 +162,7 @@ const boxStyle = {
 const transLayoutToMap = (layout = []) => {
   const childrenMap = {};
   layout.forEach(({ key, ...other }) => {
-    childrenMap[key] = other;
+    if(key) childrenMap[key] = other;
   });
   return childrenMap;
 };
