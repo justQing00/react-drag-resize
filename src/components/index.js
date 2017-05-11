@@ -113,14 +113,14 @@ export default class DragResizeContainer extends React.Component {
   }
 
   render() {
-    const { children, dragProps, resizeProps } = this.props;
+    const { children, dragProps, resizeProps, ...other } = this.props;
     const { parentNode } = this.state;
     const defaultProps = {
       parentNode,
     };
     const tempChildren = children instanceof Array ? children : [children];
     return (
-      <div style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
+      <div {...other} style={contianerStyle} onMouseEnter={this.setParentNode} onTouchStart={this.setParentNode}>
         {tempChildren.map((single) => {
           const key = single.key;
           if (!this.childrenMap[key]) this.childrenMap[key] = defaultChildProps;
