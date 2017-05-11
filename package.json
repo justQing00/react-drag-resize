@@ -1,6 +1,6 @@
 {
   "name": "react-drag-resize",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "react component drag and resize",
   "main": "lib/index.js",
   "scripts": {
