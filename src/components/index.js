@@ -18,6 +18,7 @@ export class DragResize extends React.Component {
     const { childMap } = nextProps;
     if (!isEqual(childMap, this.props.childMap)) {
       this.setState({ position: { x: childMap.x, y: childMap.y } });
+      this.resize.updateSize({ width: childMap.width, height: childMap.height })
     }
   }
 
@@ -32,11 +33,11 @@ export class DragResize extends React.Component {
   }
 
   getResizeProps = () => {
-    const { resizeProps = {}, parentNode } = this.props;
+    const { resizeProps = {}, parentNode, childMap } = this.props;
     return {
       ...resizeProps,
-      width: resizeProps.width || 200,
-      height: resizeProps.height || 100,
+      width: childMap.width || resizeProps.width || 200,
+      height: childMap.height || resizeProps.height || 100,
       minWidth: resizeProps.minWidth || 100,
       minHeight: resizeProps.minHeight || 80,
       onResizeStart: this.onResizeStart,
@@ -59,7 +60,7 @@ export class DragResize extends React.Component {
     return (
       <Draggable {...this.getDragProps()}>
         <div style={Object.assign({}, boxStyle, { zIndex: childMap.zIndex })}>
-          <Resizable {...this.getResizeProps()}>
+          <Resizable ref={resize => this.resize = resize} {...this.getResizeProps()}>
             {children}
           </Resizable>
         </div>
@@ -79,10 +80,7 @@ export default class DragResizeContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { layout } = nextProps;
-    if (!isEqual(layout, this.props.layout) || (Object.keys(this.childrenMap).length !== layout.length) ) {
-      this.childrenMap = transLayoutToMap(layout);
-    }
+    this.childrenMap = transLayoutToMap(nextProps.layout);
   }
 
   onResizeStop = (key) => {

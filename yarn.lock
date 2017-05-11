@@ -1589,9 +1589,9 @@ react-draggable@^2.2.6:
   dependencies:
     classnames "^2.2.5"
 
-react-resizable-box@^2.0.3:
-  version "2.0.3"
-  resolved "http://registry.npm.taobao.org/react-resizable-box/download/react-resizable-box-2.0.3.tgz#e9cdb47fc86e6e3d37ee8a387959b6a142269ab8"
+react-resizable-box@^2.0.4:
+  version "2.0.4"
+  resolved "http://registry.npm.taobao.org/react-resizable-box/download/react-resizable-box-2.0.4.tgz#60113dfef9f9e1ccb88a3ea9a386b3992e0431d8"
   dependencies:
     lodash.isequal "^4.5.0"
 
