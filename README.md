@@ -27,7 +27,7 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
 
   resizeProps,  // same to react-resizable-box props
 
-  zoomScaleRate, // zoom or scale rate for mouse and component move
+  scale, // zoom or scale rate for component drag or resize
 }
 ```
 
@@ -45,7 +45,7 @@ So I refactor one, base on Base Packages.
 
 ### Changelog
 ##### 0.1.1
-* add support for dragging components inside scaled or zoom Div
+* add support for dragging or resizing components inside scaled or zoom Div
 
 ##### 0.1.0
 * onLayoutChange waring fix
