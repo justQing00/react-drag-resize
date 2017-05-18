@@ -97,17 +97,10 @@ export default class DragResizeContainer extends React.Component {
     return (e, position) => {
       const { onStop } = this.props.dragProps || {};
       if (onStop) onStop();
-      this.setState({}); // force update when drag, just reduce size change render
-    };
-  }
-
-  onDrag = (key) => {
-    return (e, position) => {
-      const { zoomScaleRate = 1 } = this.props;
-      const { lastX, lastY, deltaX, deltaY } = position;
-      const temp = { x: lastX + deltaX / zoomScaleRate, y: lastY + deltaY / zoomScaleRate };
+      const temp = { x: position.x, y: position.y };
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
+      this.setState({}); // force update when drag, just reduce size change render
     };
   }
 
@@ -138,7 +131,7 @@ export default class DragResizeContainer extends React.Component {
               key={key}
               {...defaultProps}
               resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key) })}
-              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key), onDrag: this.onDrag(key) })}
+              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key) })}
               childMap={this.childrenMap[key]}
             >
               {single}
