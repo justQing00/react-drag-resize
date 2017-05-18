@@ -4,7 +4,7 @@ import Draggable from 'react-draggable';
 import Resizable from 'react-resizable-box';
 import isEqual from 'lodash.isequal';
 
-export class DragResize extends React.Component {
+class DragResize extends React.Component {
   constructor(props) {
     super(props);
     const { x, y } = this.props.childMap || {};
@@ -97,10 +97,17 @@ export default class DragResizeContainer extends React.Component {
     return (e, position) => {
       const { onStop } = this.props.dragProps || {};
       if (onStop) onStop();
-      const temp = { x: position.x, y: position.y };
+      this.setState({}); // force update when drag, just reduce size change render
+    };
+  }
+
+  onDrag = (key) => {
+    return (e, position) => {
+      const { zoomScaleRate = 1 } = this.props;
+      const { lastX, lastY, deltaX, deltaY } = position;
+      const temp = { x: lastX + deltaX / zoomScaleRate, y: lastY + deltaY / zoomScaleRate };
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
-      this.setState({}); // force update when drag, just reduce size change render
     };
   }
 
@@ -115,7 +122,7 @@ export default class DragResizeContainer extends React.Component {
   }
 
   render() {
-    const { children, dragProps, resizeProps, layout, onLayoutChange, ...other } = this.props;
+    const { children, dragProps, resizeProps, layout, onLayoutChange, zoomScaleRate, ...other } = this.props;
     const { parentNode } = this.state;
     const defaultProps = {
       parentNode,
@@ -131,7 +138,7 @@ export default class DragResizeContainer extends React.Component {
               key={key}
               {...defaultProps}
               resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key) })}
-              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key) })}
+              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key), onDrag: this.onDrag(key) })}
               childMap={this.childrenMap[key]}
             >
               {single}
