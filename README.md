@@ -15,9 +15,6 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
   <OneComp />    // use key if need save it
 </DragResizeContainer>
 
-<div style={{width: '500px' height: '500px', position: 'relative' }}>
-  <DragResize><OneComp /></DragResize>
-</div>
 ```
 ### DragResizeContainer Props
 ```javascript
@@ -29,18 +26,11 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
   dragProps,  // same to react-draggable props
 
   resizeProps,  // same to react-resizable-box props
+
+  zoomScaleRate, // zoom or scale rate for mouse and component move
 }
 ```
-### DragResize Props
-```javascript
-{
-  childMap, // child size and position,  demo: { key: 1, width: 100, height: 1000, x: 0, y: 0, zIndex: 1 }
 
-  dragProps,  // same to react-draggable props
-
-  resizeProps,  // same to react-resizable-box props
-}
-```
 ### Base Packages
 [react-resizable-box](https://github.com/bokuweb/react-resizable-box)
 
@@ -54,8 +44,9 @@ So I refactor one, base on Base Packages.
 ### CheckList
 
 ### Changelog
+##### 0.1.1
+* add support for dragging components inside scaled or zoom Div
 
-### Changelog
 ##### 0.1.0
 * onLayoutChange waring fix
 
