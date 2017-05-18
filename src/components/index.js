@@ -87,7 +87,16 @@ export default class DragResizeContainer extends React.Component {
     return (e, direction, refToElement, delta) => {
       const { onResizeStop } = this.props.resizeProps || {};
       if (onResizeStop) onResizeStop(e, direction, refToElement, delta);
-      const temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
+      const { zoomScaleRate = 1 } = this.props;
+      let temp = null;
+      if (zoomScaleRate !== 1) { // 缩放,则不调用
+        temp = {
+          width: this.childrenMap[key].width + delta.width / zoomScaleRate, 
+          height: this.childrenMap[key].height  + delta.height / zoomScaleRate
+        };
+      } else {
+        temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
+      }
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
     };
