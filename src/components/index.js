@@ -96,10 +96,26 @@ export default class DragResizeContainer extends React.Component {
   onDragStop = (key) => {
     return (e, position) => {
       const { onStop } = this.props.dragProps || {};
+      const { zoomScaleRate = 1 } = this.props;
       if (onStop) onStop();
+      if (zoomScaleRate !== 1) { // 不缩放,则调用
+        this.onLayoutChange();
+        return false;
+      }
       const temp = { x: position.x, y: position.y };
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
+      this.setState({}); // force update when drag, just reduce size change render
+    };
+  }
+
+  onDrag = (key) => {
+    return (e, position) => {
+      const { zoomScaleRate = 1 } = this.props;
+      if (zoomScaleRate === 1) return true; // 缩放,则调用
+      const { lastX, lastY, deltaX, deltaY } = position;
+      const temp = { x: lastX + deltaX / zoomScaleRate, y: lastY + deltaY / zoomScaleRate };
+      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.setState({}); // force update when drag, just reduce size change render
     };
   }
@@ -131,7 +147,7 @@ export default class DragResizeContainer extends React.Component {
               key={key}
               {...defaultProps}
               resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key) })}
-              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key) })}
+              dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key), onDrag: this.onDrag(key) })}
               childMap={this.childrenMap[key]}
             >
               {single}
