@@ -73,7 +73,7 @@ export default class DragResizeContainer extends React.Component {
       const { scale = 1 } = this.props;
       if (scale === 1) return true; // if scale not exists
       const { lastX, lastY, deltaX, deltaY } = position;
-      const temp = { x: lastX + deltaX / scale, y: lastY + deltaY / scale };
+      const temp = { x: this.childrenMap[key].x + deltaX / scale, y: this.childrenMap[key].y + deltaY / scale };
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.setState({}); // force update when drag, just reduce size change render
     };
