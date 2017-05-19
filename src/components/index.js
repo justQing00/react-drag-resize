@@ -17,7 +17,26 @@ export default class DragResizeContainer extends React.Component {
   }
 
   onResizeStart = (key) => {
+    return () => {
+      const { scale = 1 } = this.props;
+      if (scale === 1) return;
+      this.currentChildMap = this.childrenMap[key];
+    }
+  }
 
+  onResize = (key) => {
+    return (e, direction, refToElement, delta) => {
+      const { onResizeStop } = this.props.resizeProps || {};
+      if (onResizeStop) onResizeStop(e, direction, refToElement, delta);
+      const { scale = 1 } = this.props;
+      if (scale === 1) return;
+      const temp = {
+        width: this.currentChildMap.width + delta.width / scale, 
+        height: this.currentChildMap.height  + delta.height / scale
+      };
+      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
+      this.onLayoutChange();
+    };
   }
 
   onResizeStop = (key) => {
@@ -25,15 +44,9 @@ export default class DragResizeContainer extends React.Component {
       const { onResizeStop } = this.props.resizeProps || {};
       if (onResizeStop) onResizeStop(e, direction, refToElement, delta);
       const { scale = 1 } = this.props;
-      let temp = null;
-      if (scale !== 1) { // if scale exists
-        temp = {
-          width: this.childrenMap[key].width + delta.width / scale, 
-          height: this.childrenMap[key].height  + delta.height / scale
-        };
-      } else {
-        temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
-      }
+      if (scale !== 1) return
+      const temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
+      this.currentChildMap = null;
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
     };
@@ -92,7 +105,11 @@ export default class DragResizeContainer extends React.Component {
             <DragResize
               key={key}
               {...defaultProps}
-              resizeProps={Object.assign({}, resizeProps, { onResizeStop: this.onResizeStop(key) })}
+              resizeProps={Object.assign({}, resizeProps, { 
+                onResizeStop: this.onResizeStop(key), 
+                onResizeStart: this.onResizeStart(key), 
+                onResize: this.onResize(key) 
+              })}
               dragProps={Object.assign({}, dragProps, { onStop: this.onDragStop(key), onDrag: this.onDrag(key) })}
               childMap={this.childrenMap[key]}
             >
