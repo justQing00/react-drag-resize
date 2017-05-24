@@ -45,7 +45,7 @@ So I refactor one, base on Base Packages.
 
 ### Changelog
 ##### 0.1.2
-* wait dragging scale fix in react-draggable
+* dragging scale fix in react-draggable
 
 ##### 0.1.1
 * add support for resizing components inside scaled or zoom Div
