@@ -42,10 +42,11 @@ In a project I have to make React compoments dragable and resizable, and I found
 So I refactor one, base on Base Packages.
 
 ### CheckList
+
+### Changelog
 ##### 0.1.2
 * wait dragging scale fix in react-draggable
 
-### Changelog
 ##### 0.1.1
 * add support for resizing components inside scaled or zoom Div
 
