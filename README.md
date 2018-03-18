@@ -1,19 +1,43 @@
 # react-drag-resize
 react component drag and resize
 
+### How to install
+- `npm install --save react-drag-resize`
+
 ### How to use
+- `see ./demo`
+
+![demo](./demo/demo.gif)
+
 ```javascript
-import DragResizeContainer, { DragResize } from 'react-drag-resize';
+import DragResizeContainer from 'react-drag-resize';
 
-<DragResizeContainer>
-  {list.map((single) => {
-    return <YourComp key={single.key}/>
-  })}
+const layout = [{ x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
+
+<DragResizeContainer
+    className='resize-container'
+    resizeProps={{ 
+        minWidth: 10, 
+        minHeight: 10, 
+        enable: canResizable(isResize) 
+    }}
+    onDoubleClick={clickScreen}
+    layout={layout}
+    dragProps={{ disabled: false }}
+    onLayoutChange={onLayoutChange}
+    scale={scale}
+>
+{layout.map((single) => {
+  return (
+    <div key={single.key} className='child-container size-auto border'>text test</div>
+  );
+})}
 </DragResizeContainer>
 
-<DragResizeContainer>
-  <OneComp />    // use key if need save it
-</DragResizeContainer>
+const canResizable = (isResize) => {
+    return { top: isResize, right: isResize, bottom: isResize, left: isResize, topRight: isResize, bottomRight: isResize, bottomLeft: isResize, topLeft: isResize };
+};
+  
 
 ```
 ### DragResizeContainer Props
@@ -28,6 +52,8 @@ import DragResizeContainer, { DragResize } from 'react-drag-resize';
   resizeProps,  // same to react-resizable-box props
 
   scale, // zoom or scale rate for component drag or resize
+
+  onDoubleClick, // for resize-container double click
 }
 ```
 

@@ -1,0 +1,21 @@
+.resize-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.child-container {
+    position: relative;
+    color: #fff;
+    &.border {
+        border: 1px solid #00D19C;
+    }
+}
+
+.size-auto {
+    position: absolute;
+    top: 15px;
+    bottom: 15px;
+    right: 15px;
+    left: 15px;
+}
