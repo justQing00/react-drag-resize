@@ -1,3 +1,4 @@
+![download](https://img.shields.io/badge/download-700+/month-green.svg?longCache=true&style=plastic)
 # react-drag-resize
 react component drag and resize
 
