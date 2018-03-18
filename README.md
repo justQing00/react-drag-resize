@@ -6,13 +6,15 @@ react component drag and resize
 
 ### How to use
 - `see ./demo`
+- `child must use absolute style for position confirmation. Like style class: child-container size-auto`
+-  `child must have key, key suggest use string`
 
 ![demo](./demo/demo.gif)
 
 ```javascript
 import DragResizeContainer from 'react-drag-resize';
 
-const layout = [{ x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
+const layout = [{ key: 'test', x: 0, y: 0, width: 200, height: 100, zIndex: 1 }]
 
 <DragResizeContainer
     className='resize-container'
