@@ -18,11 +18,9 @@ export default class DragResizeContainer extends React.Component {
 
   onResizeStart = (key) => {
     return (e, direction, refToElement, delta) => {
-      const { scale = 1 } = this.props;
       const { onResizeStart } = this.props.resizeProps || {};
       if (onResizeStart) onResizeStart(e, direction, refToElement, delta);
-      if (scale === 1) return;
-      this.currentChildMap = this.childrenMap[key];
+      this.currentChildMap = { ...this.childrenMap[key] };
     };
   }
 
@@ -31,25 +29,18 @@ export default class DragResizeContainer extends React.Component {
       const { onResize } = this.props.resizeProps || {};
       if (onResize) onResize(e, direction, refToElement, delta);
       const { scale = 1 } = this.props;
-      if (scale === 1) return;
-      const temp = {
-        width: this.currentChildMap.width + (delta.width / scale),
-        height: this.currentChildMap.height + (delta.height / scale),
-      };
-      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
+      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], getResizePositionTemp({ currentChildMap: this.currentChildMap, direction, delta, scale }));
       this.onLayoutChange();
     };
   }
 
-  onResizeStop = (key) => {
+  onResizeStop = () => {
     return (e, direction, refToElement, delta) => {
       const { onResizeStop } = this.props.resizeProps || {};
       if (onResizeStop) onResizeStop(e, direction, refToElement, delta);
+      this.currentChildMap = null;
       const { scale = 1 } = this.props;
       if (scale !== 1) return;
-      const temp = { width: refToElement.clientWidth, height: refToElement.clientHeight };
-      this.currentChildMap = null;
-      if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], temp);
       this.onLayoutChange();
     };
   }
@@ -137,7 +128,7 @@ const contianerStyle = {
 const transLayoutToMap = (layout = []) => {
   const childrenMap = {};
   layout.forEach(({ key, ...other }) => {
-    if(key) childrenMap[key] = other;
+    if (key) childrenMap[key] = other;
   });
   return childrenMap;
 };
@@ -149,3 +140,41 @@ const transMapToLayout = (childrenMap = {}) => {
 };
 
 const defaultChildProps = { x: 0, y: 0, width: 200, height: 100, zIndex: 1 };
+
+const getResizePositionTemp = ({ currentChildMap, direction, delta, scale }) => {
+  const temp = {};
+  const distanceW = delta.width / scale;
+  const distanceH = delta.height / scale;
+  switch (direction) {
+    case 'bottom':
+    case 'right':
+    case 'bottomRight':
+      temp.width = currentChildMap.width + distanceW;
+      temp.height = currentChildMap.height + distanceH;
+      break;
+    case 'top':
+    case 'left':
+    case 'topLeft':
+      temp.x = currentChildMap.x - distanceW;
+      temp.y = currentChildMap.y - distanceH;
+      if (temp.y < 0) temp.y = 0;
+      if (temp.y !== 0) temp.height = currentChildMap.height + distanceH;
+      if (temp.x < 0) temp.x = 0;
+      if (temp.x !== 0) temp.width = currentChildMap.width + distanceW;
+      break;
+    case 'topRight':
+      temp.y = currentChildMap.y - distanceH;
+      temp.width = currentChildMap.width + distanceW;
+      if (temp.y < 0) temp.y = 0;
+      if (temp.y !== 0) temp.height = currentChildMap.height + distanceH;
+      break;
+    case 'bottomLeft':
+      temp.x = currentChildMap.x - distanceW;
+      temp.height = currentChildMap.height + distanceH;
+      if (temp.x < 0) temp.x = 0;
+      if (temp.x !== 0) temp.width = currentChildMap.width + distanceW;
+      break;
+    default:
+  }
+  return temp;
+};

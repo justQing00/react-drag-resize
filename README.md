@@ -73,6 +73,9 @@ So I refactor one, base on Base Packages.
 ### CheckList
 
 ### Changelog
+##### 0.1.3
+* resize to all direction
+
 ##### 0.1.2
 * dragging scale fix in react-draggable
 
