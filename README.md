@@ -73,7 +73,7 @@ So I refactor one, base on Base Packages.
 ### CheckList
 
 ### Changelog
-##### 0.1.3
+##### 0.1.4
 * resize to all direction
 
 ##### 0.1.2

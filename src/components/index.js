@@ -30,6 +30,7 @@ export default class DragResizeContainer extends React.Component {
       if (onResize) onResize(e, direction, refToElement, delta);
       const { scale = 1 } = this.props;
       if (key) this.childrenMap[key] = Object.assign({}, this.childrenMap[key], getResizePositionTemp({ currentChildMap: this.currentChildMap, direction, delta, scale }));
+      if (scale === 1) return;
       this.onLayoutChange();
     };
   }
